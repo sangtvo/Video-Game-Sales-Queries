@@ -51,11 +51,11 @@ The data consists of 16 attributes and 16,720 variables. Before a database is cr
 
 For this particular database, we will normalize up to the third normal form (3NF).
 
-In the First Normal Form (1NF), there are no groups that repeats the data. 
-In the Second Normal Form (2NF), 1NF applies and non-key attributes are fully dependent on its primary key.
-In the Third normal Form (3NF), 1NF and 2NF applies as well as all of its attributes are directly dependent on the primary key. 
+* In the First Normal Form (1NF), there are no groups that repeats the data. 
+* In the Second Normal Form (2NF), 1NF applies and non-key attributes are fully dependent on its primary key.
+* In the Third normal Form (3NF), 1NF and 2NF applies as well as all of its attributes are directly dependent on the primary key. 
 
-In order to quickly separate the data into 3 tables, Microsoft Excel was used. Then Python was used to generate a unique ID for each table (titles, sales, scores). 
+In order to quickly separate the data into 3 tables, Microsoft Excel was used. Then Python was used to generate a unique ID for each table (titles, sales, scores) using UUID library.
 ```python
 import pandas as pd
 import uuid
@@ -170,8 +170,33 @@ ORDER BY 2 DESC
 genre_sales = run_query(q1)
 genre_sales
 ```
+```
+	Genre	sales	sales_percentage
+0	Action	3370	20.156708
+1	Sports	2348	14.043902
+2	Misc	1750	10.467133
+3	Role-Playing	1500	8.971828
+4	Shooter	1323	7.913153
+5	Adventure	1303	7.793528
+6	Racing	1249	7.470542
+7	Platform	888	5.311322
+8	Simulation	874	5.227585
+9	Fighting	849	5.078055
+10	Strategy	683	4.085173
+11	Puzzle	580	3.469107
+12	None	2	0.011962
+```
+```python
+ax = sns.barplot(x='sales', y='Genre', data=genre_sales, palette='cool')
+ax.set_title('Top Selling Genres', size=14, weight='bold')
+ax.set_xlabel('Total Sales')
+ax.set_ylabel('Genre')
+plt.show()
+```
 
+![top_genres](https://github.com/sangtvo/Video-Game-Sales-Queries/blob/main/images/top_genres.png?raw=true)
 
+* The top selling genre worldwide are action titles which makes up 20.15% of the sales, followed by sports and miscelanneous titles. We can see that most consumers prefer not to play any mind boggling genres which is roughly 4-5%. 
 
 
 Key Takeaways
