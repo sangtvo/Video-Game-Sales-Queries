@@ -104,14 +104,15 @@ c.execute('''CREATE TABLE SCORES
                  
 conn.commit()
 
+# Insert the values from the csv file into the table 'TITLES' 
 read_titles = pd.read_csv ('vg_titles.csv')
-read_titles.to_sql('TITLES', conn, if_exists='append', index = False) # Insert the values from the csv file into the table 'TITLES' 
+read_titles.to_sql('TITLES', conn, if_exists='append', index = False) 
 
 read_sales = pd.read_csv ('vg_salesID.csv')
-read_sales.to_sql('SALES', conn, if_exists='replace', index = False) # Insert the values from the csv file into the table 'SALES'
+read_sales.to_sql('SALES', conn, if_exists='replace', index = False) 
 
 read_scores = pd.read_csv ('vg_scoresID.csv')
-read_scores.to_sql('SCORES', conn, if_exists='replace', index = False) # Insert the values from the csv file into the table 'SCORES'
+read_scores.to_sql('SCORES', conn, if_exists='replace', index = False) 
 ```
 
 In order to check if the database was created successfully, a function is created to show the tables in the vg_sales.db.
@@ -154,8 +155,24 @@ def run_command(c):
 
 Now, we can query our own database and start answering several business questions.
 
-Database
+SQL Queries
 ---
+What is the percentage of all sales for each genre?
+```sql
+q1 = '''
+SELECT t.genre, COUNT(*) sales, COUNT(*) * 100.0 / (SELECT COUNT(*) FROM sales) sales_percentage
+FROM titles t
+INNER JOIN sales s
+    ON s.unique_id = t.unique_id
+GROUP BY 1
+ORDER BY 2 DESC
+'''
+genre_sales = run_query(q1)
+genre_sales
+```
+
+
+
 
 Key Takeaways
 ---
