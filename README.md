@@ -168,7 +168,7 @@ Now, we can query our own database and start answering several business question
 
 SQL Queries
 ---
-Due to SQL query output not aligning correctly on github, output will be displayed in the code folder.
+Due to SQL query output not aligning correctly on github, check out [video_games_sales_analysis.ipynb](https://github.com/sangtvo/Video-Game-Sales-Queries/blob/main/code/video_games_sales_analysis.ipynb)
 
 ### What is the percentage of all sales for each genre?
 ```sql
