@@ -157,7 +157,7 @@ Now, we can query our own database and start answering several business question
 
 SQL Queries
 ---
-#### What is the percentage of all sales for each genre?
+### What is the percentage of all sales for each genre?
 ```sql
 q1 = '''
 SELECT t.genre, COUNT(*) sales, COUNT(*) * 100.0 / (SELECT COUNT(*) FROM sales) sales_percentage
@@ -211,17 +211,17 @@ top_publishers = run_query(q2)
 top_publishers
 ```
 ```
-	Publisher	                    num_of_games	total_game_percentage
-0	Electronic Arts	                1356	        8.110533
-1	Activision	                    985	            5.891501
-2	Namco Bandai Games	            939	            5.616365
-3	Ubisoft	                        933	            5.580477
-4	Konami Digital Entertainment	834	            4.988337
-5	THQ	                            715	            4.276572
-6	Nintendo	                    706	            4.222741
-7	Sony Computer Entertainment	    687	            4.109097
-8	Sega	                        638	            3.816018
-9	Take-Two Interactive	        422	            2.524074
+	Publisher	num_of_games	total_game_percentage
+0	Electronic Arts	1356	8.110533
+1	Activision	985	5.891501
+2	Namco Bandai Games	939	5.616365
+3	Ubisoft	933	5.580477
+4	Konami Digital Entertainment	834	4.988337
+5	THQ	715	4.276572
+6	Nintendo	706	4.222741
+7	Sony Computer Entertainment	687	4.109097
+8	Sega	638	3.816018
+9	Take-Two Interactive	422	2.524074
 ```
 ```python
 ax2 = sns.barplot(x='num_of_games', y='Publisher', data=top_publishers, palette='plasma')
@@ -230,7 +230,7 @@ ax2.set_xlabel('Total Games')
 ax2.set_ylabel('Publisher')
 plt.show()
 ```
-
+![top_pub](https://github.com/sangtvo/Video-Game-Sales-Queries/blob/main/images/top_publishers.png?raw=true)
 
 
 
