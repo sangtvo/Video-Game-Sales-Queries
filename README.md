@@ -157,6 +157,8 @@ Now, we can query our own database and start answering several business question
 
 SQL Queries
 ---
+Due to SQL query output not aligning correctly on github, output will be displayed in the code folder.
+
 ### What is the percentage of all sales for each genre?
 ```sql
 q1 = '''
@@ -170,22 +172,6 @@ ORDER BY 2 DESC
 genre_sales = run_query(q1)
 genre_sales
 ```
-```
-	Genre	        sales	sales_percentage
-0	Action	        3370	20.156708
-1	Sports	        2348	14.043902
-2	Misc	        1750	10.467133
-3	Role-Playing	1500	8.971828
-4	Shooter	        1323	7.913153
-5	Adventure	    1303	7.793528
-6	Racing	        1249	7.470542
-7	Platform	    888	    5.311322
-8	Simulation	    874	    5.227585
-9	Fighting	    849	    5.078055
-10	Strategy	    683	    4.085173
-11	Puzzle	        580	    3.469107
-12	None	        2	    0.011962
-```
 ```python
 ax = sns.barplot(x='sales', y='Genre', data=genre_sales, palette='cool')
 ax.set_title('Top Selling Genres', size=14, weight='bold')
@@ -198,7 +184,7 @@ plt.show()
 
 * The top selling genre worldwide are action titles which makes up 20.15% of the sales, followed by sports and miscelanneous titles. We can see that most consumers prefer not to play any mind boggling genres which is roughly 4-5%. 
 
-### Who are the top publishers?
+### Who are the top 10 publishers?
 ```sql
 q2 = '''
 SELECT publisher, COUNT(name) num_of_games, COUNT(*) * 100.0 / (SELECT COUNT(*) FROM titles) total_game_percentage
@@ -210,19 +196,6 @@ LIMIT 10
 top_publishers = run_query(q2)
 top_publishers
 ```
-```
-	Publisher	num_of_games	total_game_percentage
-0	Electronic Arts	1356	8.110533
-1	Activision	985	5.891501
-2	Namco Bandai Games	939	5.616365
-3	Ubisoft	933	5.580477
-4	Konami Digital Entertainment	834	4.988337
-5	THQ	715	4.276572
-6	Nintendo	706	4.222741
-7	Sony Computer Entertainment	687	4.109097
-8	Sega	638	3.816018
-9	Take-Two Interactive	422	2.524074
-```
 ```python
 ax2 = sns.barplot(x='num_of_games', y='Publisher', data=top_publishers, palette='plasma')
 ax2.set_title('Top 10 Publishers', size=14, weight='bold')
@@ -230,7 +203,57 @@ ax2.set_xlabel('Total Games')
 ax2.set_ylabel('Publisher')
 plt.show()
 ```
+
 ![top_pub](https://github.com/sangtvo/Video-Game-Sales-Queries/blob/main/images/top_publishers.png?raw=true)
+
+* Electronic Arts takes the lead for the most titles be created and sold globally which accounts for 8.11% of the data. All publishers starting THQ do not make titles half as much as Electronic Arts does.
+
+### What are the sales per region?
+```sql
+q3 = '''
+SELECT SUM(s.na_sales) na_sales, SUM(s.eu_sales) eu_sales, SUM(s.jp_sales) jp_sales, SUM(s.other_sales) other_sales, SUM(s.global_sales) global_sales
+FROM sales s
+INNER JOIN titles t
+    ON t.unique_id = s.unique_id
+'''
+region_sales = run_query(q3)
+region_sales
+```
+```
+na_sales	eu_sales	jp_sales	other_sales	global_sales
+4402.62	    2424.67	    1297.43	    791.34	    8920.3
+```
+* It seems that North America consumes half of the game sales and that a gaming lifestyle is quite prominent in this region. 
+
+### What is the average critic and user score for the top 5 publishers?
+```sql
+q4 = '''
+SELECT t.publisher, AVG(s.critic_score)/10 avg_critic_score, AVG(s.user_score) avg_user_score
+FROM scores s
+INNER JOIN titles t
+    ON s.unique_id = t.unique_id
+WHERE t.publisher IN ('Electronic Arts', 'Activision', 'Namco Bandai Games', 'Ubisoft', 'Konami Digital Entertainment')
+GROUP BY t.publisher
+'''
+avg_scores = run_query(q4)
+avg_scores
+```
+```
+	Publisher	                    avg_critic_score	avg_user_score
+0	Activision	                    6.966784	        4.927842
+1	Electronic Arts	                7.447619	        6.330500
+2	Konami Digital Entertainment	6.834451	        5.188391
+3	Namco Bandai Games	            6.644803	        6.155769
+4	Ubisoft	6.851434	            4.974619
+```
+```python
+# To melt the two columns into observation data
+m_avg_score = pd.melt(avg_scores, id_vars = 'Publisher')
+
+ax3 = sns.catplot(x='Publisher', y='value', hue='variable', data=m_avg_score, kind='bar', aspect=2, palette='Blues')
+plt.show()
+```
+![avg_scpre](https://github.com/sangtvo/Video-Game-Sales-Queries/blob/main/images/avg_scores.png?raw=true)
 
 
 
