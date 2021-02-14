@@ -241,8 +241,8 @@ avg_scores
 ```
 	Publisher	                    avg_critic_score	avg_user_score
 0	Activision	                    6.966784	        4.927842
-1	Electronic Arts	                7.447619	        6.330500
-2	Konami Digital Entertainment	6.834451	        5.188391
+1	Electronic Arts	                    7.447619	    6.330500
+2	Konami Digital Entertainment	    6.834451	    5.188391
 3	Namco Bandai Games	            6.644803	        6.155769
 4	Ubisoft	6.851434	            4.974619
 ```
@@ -253,9 +253,110 @@ m_avg_score = pd.melt(avg_scores, id_vars = 'Publisher')
 ax3 = sns.catplot(x='Publisher', y='value', hue='variable', data=m_avg_score, kind='bar', aspect=2, palette='Blues')
 plt.show()
 ```
-![avg_scpre](https://github.com/sangtvo/Video-Game-Sales-Queries/blob/main/images/avg_scores.png?raw=true)
+![avg_score](https://github.com/sangtvo/Video-Game-Sales-Queries/blob/main/images/avg_scores.png?raw=true)
+* Critic scores tend to be much higher on average compared to user scores. Perhaps gamers expect high quality content and have much higher standards compared to critics.
 
+### Which year has the most releases?
+```sql
+q5 = '''
+SELECT year_of_release, COUNT(*) num_of_titles
+FROM titles
+GROUP BY year_of_release
+ORDER BY year_of_release ASC
+'''
+release_yr_by_title = run_query(q5)
+release_yr_by_title
+```
+```python
+# Convert years as categorical in order for data to be visualized.
+release_yr_by_title['Year_of_Release'] = release_yr_by_title['Year_of_Release'].astype('category')
 
+ax4 = sns.lineplot(x='Year_of_Release', y='num_of_titles', data=release_yr_by_title)
+ax4.set_title('Releases Over the Years', size=14, weight='bold')
+ax4.set_xlabel('Years')
+ax4.set_ylabel('Number of Titles')
+plt.show()
+```
+![releases_over_yrs](https://github.com/sangtvo/Video-Game-Sales-Queries/blob/main/images/releases_over_yrs.png?raw=true)
+
+* The peak number of title releases was in 2008 that had 1,427 titles. Roughly in the years 2008-2011, publishers were in full force and created many titles for consumers. However, it declined over the next few years.
+
+### What year had the most North America Sales?
+```sql
+q6 = '''
+SELECT year_of_release, SUM(na_sales) NA_sales
+FROM titles t
+INNER JOIN sales s
+    ON s.unique_id = t.unique_id
+GROUP BY year_of_release
+ORDER BY NA_sales DESC
+'''
+release_yr_by_sales = run_query(q6)
+release_yr_by_sales
+```
+```python
+release_yr_by_sales['Year_of_Release'] = release_yr_by_sales['Year_of_Release'].astype('category')
+ax5 = sns.lineplot(x='Year_of_Release', y='NA_sales', data=release_yr_by_sales)
+ax5.set_title('Yearly NA Sales', size=14, weight='bold')
+ax5.set_xlabel('Years')
+ax5.set_ylabel('Sales')
+plt.show()
+```
+![na_sales](https://github.com/sangtvo/Video-Game-Sales-Queries/blob/main/images/yearly_na_sales.png?raw=true)
+* As expected, 2008 was the year publishers created the most titles and therefore, had the most sales. The distribution of NA sales have a similar trend with the number of titles over the years. 
+
+### Which platform is most popular?
+```sql
+q7 = '''
+SELECT t.platform, SUM(global_sales) global_sales
+FROM titles t
+INNER JOIN sales s
+    ON s.unique_id = t.unique_id
+GROUP BY platform
+ORDER BY global_sales DESC
+'''
+platform_sales = run_query(q7)
+platform_sales
+```
+```python
+plt.figure(figsize=(14,5))
+ax6 = sns.barplot(x='Platform', y='global_sales', data=platform_sales, palette='RdPu_r')
+ax6.set_title('Platform Global Sales', size=14, weight='bold')
+ax6.set_xlabel('Platform')
+ax6.set_ylabel('Sales')
+plt.show()
+```
+![platform_sales](https://github.com/sangtvo/Video-Game-Sales-Queries/blob/main/images/platform_global_sales.png?raw=true)
+* Playstation 2 seems to be the most popular console game in this era. However, as time goes on, PS titles slowly decline as new versions releases. One can notice that PS4 declined at least 4x as much as PS2. 
+* In terms of portability, Nintendo DS is quite popular as it ranks 5th which means that consumers are more likely to play games on-the-go. 
+
+### What are the top games that customers scored the highest?
+```sql
+q8 = '''
+SELECT t.name, s.User_Score
+FROM scores s
+INNER JOIN titles t
+    ON t.unique_id = s.unique_id
+WHERE s.User_Score IS NOT NULL AND s.User_Score IS NOT 'tbd'
+ORDER BY s.User_Score DESC, name ASC
+LIMIT 10
+'''
+top_user_score = run_query(q8)
+top_user_score
+```
+```python
+# Convert variable in order to visualize the data.
+top_user_score['Name'] = top_user_score['Name'].astype('category')
+top_user_score['User_Score'] = top_user_score['User_Score'].astype('float')
+
+ax7 = sns.barplot(x='User_Score', y='Name', data=top_user_score, palette='RdPu_r')
+ax7.set_title('Best Titles by Users', size=14, weight='bold')
+ax7.set_xlabel('User Score')
+ax7.set_ylabel('Titles')
+plt.show()
+```
+![best_titles](https://github.com/sangtvo/Video-Game-Sales-Queries/blob/main/images/best_titles_users.png?raw=true)
+* The best title that has the highest user score rating is Breathe of Fire III with a score of 9.7. All other titles are fairly close to each other in the 9.4-9.6 range. 
 
 Key Takeaways
 ---
