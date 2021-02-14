@@ -10,11 +10,14 @@ Table of Contents
 5. [Database Implementation](#database-implementation)
 6. [SQL Queries](#sql-queries)
     * [What is the percentage of all sales for each genre?](#what-is-the-percentage-of-all-sales-for-each-genre)
-7. [Step-wise Logistic Regression](#step-wise-logistic-regression)
-8. [Decision Tree](#decision-tree)
-9. [Random Forest](#random-forest)
-10. [Solution](#solution)
-11. [Key Takeaways](#key-takeaways)
+    * [Who are the top 10 publishers?](#who-are-the-top-10-publishers)
+    * [What are the sales per region?](#what-are-the-sales-per-region)
+    * [What is the average critic and user score for the top 5 publishers?](#what-is-the-average-critic-and-user-score-for-the-top-5-publishers)
+    * [Which year has the most releases?](#which-year-has-the-most-releases)
+    * [What year had the most North America Sales?](#what-year-had-the-most-north-america-sales)
+    * [Which platform is most popular?](#which-platform-is-most-popular)
+    * [What are the top games that customers scored the highest?](#what-are-the-top-games-that-customers-scored-the-highest)
+7. [Key Takeaways](#key-takeaways)
 
 <a name="https://github.com/sangtvo/Video-Game-Sales-Queries#general-information"/>
 <a name="https://github.com/sangtvo/Video-Game-Sales-Queries#summary"/>
@@ -23,24 +26,31 @@ Table of Contents
 <a name="https://github.com/sangtvo/Video-Game-Sales-Queries#database-implementation"/>
 <a name="https://github.com/sangtvo/Video-Game-Sales-Queries#sql-queries"/>
 <a name="https://github.com/sangtvo/Video-Game-Sales-Queries#what-is-the-percentage-of-all-sales-for-each-genre"/>
-<a name="https://github.com/sangtvo/Customer-Churn-Analysis#decision-tree"/>
-<a name="https://github.com/sangtvo/Customer-Churn-Analysis#random-forest"/>
-<a name="https://github.com/sangtvo/Customer-Churn-Analysis#solution"/>
-<a name="https://github.com/sangtvo/Customer-Churn-Analysis#key-takeaways"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#who-are-the-top-10-publishers"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#what-are-the-sales-per-region"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#what-is-the-average-critic-and-user-score-for-the-top-5-publishers"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#which-year-has-the-most-releases"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#what-year-had-the-most-north-america-sales"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#which-platform-is-most-popular"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#what-are-the-top-games-that-customers-scored-the-highest"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#key-takeaways"/>
+
 
 General Information
 ---
+The raw data set contains 16 attributes and 16,720 observations which is converted into 3 separate tables to query in SQL.
 
 Summary
 ---
-The winning model is the **random forest** algorithm with an overall accuracy of 80.21% and AUC of 81.50%. This means that the model will correctly predict churn 80.21% of the time and there is a 81.50% chance that the model can distinguish between positive (churn) and negative (no churn) classes. In order for the telecommunications company to reduce the current churn rate of 26.58%, the company should focus on contracts (month-to-month specifically), tenure length, and total charges to start. The company should give incentives such as reduced pricing or discounted extra services for long-term customers to keep them from leaving to another competitor. 
+The data is normalized in the Third Normal Form (3NF) and a database is created using SQlite3. The data is explored and created strategic business questions in fictional scenarios such as how many sales per region, which titles were the best sellers, and which publisher contributed the most titles, just to name a few. For each query, the data is visualized to draw conclusions.
 
 Tech Stack
 ---
 * Python
     * NumPy
-    * Pandas
-    * Seaborn
+    * pandas
+    * seaborn
+    * Matplotlib
     * UUID
 * Microsoft Excel
 * VS Code
@@ -56,7 +66,7 @@ For this particular database, we will normalize up to the third normal form (3NF
 * In the Second Normal Form (2NF), 1NF applies and non-key attributes are fully dependent on its primary key.
 * In the Third normal Form (3NF), 1NF and 2NF applies as well as all of its attributes are directly dependent on the primary key. 
 
-In order to quickly separate the data into 3 tables, Microsoft Excel was used. Then Python was used to generate a unique ID for each table (titles, sales, scores) using UUID library.
+In order to quickly separate the data into 3 tables, Microsoft Excel was used. Then, Python was used to generate a unique ID for each table (titles, sales, scores) using UUID library.
 ```python
 import pandas as pd
 import uuid
