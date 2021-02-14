@@ -6,22 +6,23 @@ Table of Contents
 1. [General Information](#general-information)
 2. [Summary](#summary)
 3. [Tech Stack](#tech-stack)
-4. [Data Preprocessing/Cleaning](#data-preprocessingcleaning)
-5. [Exploratory Data Analysis](#exploratory-data-analysis)
-6. [Logistic Regression (Base)](#logistic-regression)
+4. [Data Normalization](#data-normalization)
+5. [Database Implementation](#database-implementation)
+6. [SQL Queries](#sql-queries)
+    * [What is the percentage of all sales for each genre?](#what-is-the-percentage-of-all-sales-for-each-genre)
 7. [Step-wise Logistic Regression](#step-wise-logistic-regression)
 8. [Decision Tree](#decision-tree)
 9. [Random Forest](#random-forest)
 10. [Solution](#solution)
 11. [Key Takeaways](#key-takeaways)
 
-<a name="https://github.com/sangtvo/Customer-Churn-Analysis#general-information"/>
-<a name="https://github.com/sangtvo/Customer-Churn-Analysis#summary"/>
-<a name="https://github.com/sangtvo/Customer-Churn-Analysis#tech-stack"/>
-<a name="https://github.com/sangtvo/Customer-Churn-Analysis#data-preprocessingcleaning"/>
-<a name="https://github.com/sangtvo/Customer-Churn-Analysis#exploratory-data-analysis"/>
-<a name="https://github.com/sangtvo/Customer-Churn-Analysis#logistic-regression"/>
-<a name="https://github.com/sangtvo/Customer-Churn-Analysis#step-wise-logistic-regression"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#general-information"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#summary"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#tech-stack"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#data-normalization"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#database-implementation"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#sql-queries"/>
+<a name="https://github.com/sangtvo/Video-Game-Sales-Queries#what-is-the-percentage-of-all-sales-for-each-genre"/>
 <a name="https://github.com/sangtvo/Customer-Churn-Analysis#decision-tree"/>
 <a name="https://github.com/sangtvo/Customer-Churn-Analysis#random-forest"/>
 <a name="https://github.com/sangtvo/Customer-Churn-Analysis#solution"/>
@@ -221,7 +222,7 @@ region_sales
 ```
 ```
 na_sales	eu_sales	jp_sales	other_sales	global_sales
-4402.62	    2424.67	    1297.43	    791.34	    8920.3
+4402.62	        2424.67	    1297.43	    791.34	    8920.3
 ```
 * It seems that North America consumes half of the game sales and that a gaming lifestyle is quite prominent in this region. 
 
@@ -241,10 +242,10 @@ avg_scores
 ```
 	Publisher	                    avg_critic_score	avg_user_score
 0	Activision	                    6.966784	        4.927842
-1	Electronic Arts	                    7.447619	    6.330500
-2	Konami Digital Entertainment	    6.834451	    5.188391
+1	Electronic Arts	                    7.447619	        6.330500
+2	Konami Digital Entertainment	    6.834451	        5.188391
 3	Namco Bandai Games	            6.644803	        6.155769
-4	Ubisoft	6.851434	            4.974619
+4	Ubisoft	                        6.851434	            4.974619
 ```
 ```python
 # To melt the two columns into observation data
@@ -360,10 +361,8 @@ plt.show()
 
 Key Takeaways
 ---
-* Based on the data, the churn rate of the data is 26.58% and more than half of the data are month-to-month contract customers. 
-  * In turn, month to month churn rate is extremely high compared to 1-2 year contracts.
-* ~$20-25 monthly rate is an extremely common charge for most customers.
-* Tenure, contract, and internet service are important predictors for churn under step-wise logistic regression and decision tree models.
-* Total charges is an important variable for random forest model, but not step-wise logistic regression and decision tree models.
-  * Top 3 variables that are important for churn rate are tenure, contract, and total charges.
-* Random forest model outperforms the other models with an overall accuracy of 80.21%.
+* In 2008, publishers released a total of 1,427 titles which contributed majority of the sales in the data set. Perhaps this is the year when gaming became a life style and video game streamers were introduced. 
+* North America contributed almost half of the sales which shows that this region has many gamers compared to other countries.
+* Consumers have much higher expectations compared to critics who score the games. 
+* The most popular portable gaming console title is the DS compared to the PSP. This is due to many fans who enjoy nintendo restricted titles that are not available on the PlayStation.
+* Gamers prefer not to play any mind boggling or strategy genres and prefer more action-packed genres.
