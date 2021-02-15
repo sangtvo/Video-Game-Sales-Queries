@@ -42,7 +42,7 @@ The raw data set contains 16 attributes and 16,720 observations which is convert
 
 Summary
 ---
-The data is normalized in the Third Normal Form (3NF) and a database is created using SQlite3. The data is explored and created strategic business questions in fictional scenarios such as how many sales per region, which titles were the best sellers, and which publisher contributed the most titles, just to name a few. For each query, the data is visualized to draw conclusions.
+The data is normalized in the Third Normal Form (3NF) and a database is created using SQlite3. The data is explored and created strategic business questions in fictional scenarios such as how many sales per region, which genres were the best sellers, and which publisher contributed the most titles, just to name a few. For each query, the data is visualized to draw conclusions.
 
 Tech Stack
 ---
