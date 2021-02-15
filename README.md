@@ -232,7 +232,7 @@ region_sales
 ```
 ```
 na_sales	eu_sales	jp_sales	other_sales	global_sales
-4402.62	        2424.67	        1297.43	    791.34	    8920.3
+4402.62	        2424.67	        1297.43	        791.34	        8920.3
 ```
 * It seems that North America consumes half of the game sales and that a gaming lifestyle is quite prominent in this region. 
 
@@ -255,7 +255,7 @@ avg_scores
 1	Electronic Arts	                    7.447619	        6.330500
 2	Konami Digital Entertainment	    6.834451	        5.188391
 3	Namco Bandai Games	            6.644803	        6.155769
-4	Ubisoft	                            6.851434	            4.974619
+4	Ubisoft	                            6.851434	        4.974619
 ```
 ```python
 # To melt the two columns into observation data
