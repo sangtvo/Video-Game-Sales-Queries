@@ -1,4 +1,4 @@
-# Project 06: Video Games Sales Queries
+# Video Games Sales Queries
 > This project analyzes video game sales data from [Kaggle](https://www.kaggle.com/rush4ratio/video-game-sales-with-ratings) by answering several possible business questions using SQL. From start to finish, this project normalizes the data to create a database, queries the database, and visualize the data. 
 
 Table of Contents
